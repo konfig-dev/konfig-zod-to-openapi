@@ -54,7 +54,7 @@ type UnknownKeysParam = 'passthrough' | 'strict' | 'strip';
 // List of Open API Versions. Please make sure these are in ascending order
 const openApiVersions = ['3.0.0', '3.0.1', '3.0.2', '3.0.3', '3.1.0'] as const;
 
-export type OpenApiVersion = typeof openApiVersions[number];
+export type OpenApiVersion = (typeof openApiVersions)[number];
 
 export type OpenAPIObjectConfig = Omit<
   OpenAPIObject,
@@ -401,11 +401,20 @@ export class OpenAPIGenerator {
       return referenceObject;
     }
 
-    const result = metadata?.metadata?.type
-      ? {
-          type: metadata?.metadata.type,
-        }
-      : this.toOpenAPISchema(innerSchema, zodSchema.isNullable(), defaultValue);
+    const getResult = () => {
+      if (
+        metadata?.metadata !== undefined &&
+        Object.keys(metadata.metadata).length > 0
+      ) {
+        return metadata.metadata;
+      }
+      return this.toOpenAPISchema(
+        innerSchema,
+        zodSchema.isNullable(),
+        defaultValue
+      );
+    };
+    const result = getResult();
 
     return metadata?.metadata
       ? this.applySchemaMetadata(result, metadata.metadata)
