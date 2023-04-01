@@ -28,7 +28,7 @@
     "test": "jest",
     "prettier": "prettier --write .",
     "lint": "prettier --check .",
-    "release-ci": "release-it --ci",
+    "release-ci": "konfig-release-it --ci",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
