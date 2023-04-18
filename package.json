@@ -1,6 +1,6 @@
 {
   "name": "konfig-zod-to-openapi",
-  "version": "4.5.12",
+  "version": "4.5.13",
   "description": "Builds OpenAPI schemas from Zod schemas",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
