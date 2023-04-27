@@ -404,15 +404,19 @@ export class OpenAPIGenerator {
     const getResult = () => {
       if (
         metadata?.metadata !== undefined &&
-        Object.keys(metadata.metadata).length > 0
+        metadata.metadata.oneOf !== undefined
       ) {
         return metadata.metadata;
       }
-      return this.toOpenAPISchema(
-        innerSchema,
-        zodSchema.isNullable(),
-        defaultValue
-      );
+      return metadata?.metadata?.type
+        ? {
+            type: metadata?.metadata.type,
+          }
+        : this.toOpenAPISchema(
+            innerSchema,
+            zodSchema.isNullable(),
+            defaultValue
+          );
     };
     const result = getResult();
 
